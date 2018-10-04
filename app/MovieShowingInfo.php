@@ -4,6 +4,7 @@
 namespace App;
 
 
+use App\Enums\MovieDimensions;
 use Cake\Chronos\Chronos;
 
 class MovieShowingInfo
@@ -63,5 +64,10 @@ class MovieShowingInfo
     public function getQuality(): int
     {
         return $this->quality;
+    }
+
+    public function is3D()
+    {
+        return $this->dimensions === MovieDimensions::THREE;
     }
 }

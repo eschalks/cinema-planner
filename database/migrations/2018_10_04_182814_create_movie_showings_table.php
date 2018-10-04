@@ -19,7 +19,7 @@ class CreateMovieShowingsTable extends Migration
             $table->string('source');
             $table->dateTime('starts_at');
             $table->dateTime('ends_at');
-            $table->boolean('3d');
+            $table->boolean('is_3d');
             $table->unsignedTinyInteger('quality');
 
             $table->foreign('movie_id')

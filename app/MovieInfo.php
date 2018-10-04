@@ -24,4 +24,20 @@ class MovieInfo
     {
         $this->showings[] = new MovieShowingInfo($startTime, $endTime, $dimensions, $quality);
     }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return MovieShowingInfo[]
+     */
+    public function getShowings()
+    {
+        return $this->showings;
+    }
 }

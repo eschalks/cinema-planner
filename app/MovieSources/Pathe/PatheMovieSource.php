@@ -6,7 +6,7 @@ namespace App\MovieSources\Pathe;
 
 use App\Enums\MovieDimensions;
 use App\Enums\MovieQuality;
-use App\MovieDataCollection;
+use App\MovieInfoCollection;
 use App\MovieSources\MovieSourceInterface;
 use Cake\Chronos\Chronos;
 use Carbon\Carbon;
@@ -18,8 +18,12 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class PatheMovieSource implements MovieSourceInterface
 {
+    public function getId(): string
+    {
+        return 'pathe_'.config('pathe.location');
+    }
 
-    public function fetchMovies(): MovieDataCollection
+    public function fetchMovies(): MovieInfoCollection
     {
         $date = Chronos::today();
         if ($date->dayOfWeek >= 1 && $date->dayOfWeek < 4) {
@@ -28,7 +32,7 @@ class PatheMovieSource implements MovieSourceInterface
 
         $endDate = $date->next(3);
 
-        $movies = new MovieDataCollection();
+        $movies = new MovieInfoCollection();
         /** @var PromiseInterface[] $promises */
         $promises = [];
         $client = new Client([
@@ -47,7 +51,7 @@ class PatheMovieSource implements MovieSourceInterface
         return $movies;
     }
 
-    private function fetchDay(Client $client, Chronos $date, MovieDataCollection $movies): PromiseInterface
+    private function fetchDay(Client $client, Chronos $date, MovieInfoCollection $movies): PromiseInterface
     {
         return $this->fetchHtml($client, $date)
                     ->then(function (string $html) use ($date, $movies) {
@@ -80,7 +84,7 @@ class PatheMovieSource implements MovieSourceInterface
         });
     }
 
-    private function parseMovieElement(Crawler $movieElement, Chronos $date, MovieDataCollection $movies)
+    private function parseMovieElement(Crawler $movieElement, Chronos $date, MovieInfoCollection $movies)
     {
         $title = $movieElement
             ->filter('.schedule-simple__content a')
@@ -141,4 +145,5 @@ class PatheMovieSource implements MovieSourceInterface
 
         return MovieQuality::NORMAL;
     }
+
 }

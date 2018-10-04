@@ -4,9 +4,10 @@
 namespace App\MovieSources;
 
 
-use App\MovieDataCollection;
+use App\MovieInfoCollection;
 
 interface MovieSourceInterface
 {
-    public function fetchMovies(): MovieDataCollection;
+    public function getId(): string;
+    public function fetchMovies(): MovieInfoCollection;
 }
