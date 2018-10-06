@@ -1,2 +1,41 @@
 @import "~normalize.css/normalize.css";
 
+body {
+    font-family: 'Roboto', monospace;
+    color: #333;
+    background: #abc;
+}
+
+.container {
+    max-width: 90rem;
+    padding: 1rem;
+    margin: 0 auto;
+}
+
+table {
+    background: white;
+    width: 100%;
+    border-collapse: collapse;
+
+    td, th {
+        padding: 0.5rem;
+        text-align: left;
+        border: thin solid #333;
+    }
+}
+
+.time-list {
+    list-style: none;
+    padding: 0;
+
+    li {
+        padding: 0.25rem;
+        border: thin solid #999;
+        margin: 0.25rem;
+        background: #eee;
+    }
+}
+
+.table__movie-title {
+    width: 20%;
+}

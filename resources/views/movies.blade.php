@@ -1,12 +1,12 @@
 @extends('layout')
 
-@section('body')
-    <table class="table table--movies">
+@section('content')
+    <table>
         <thead>
         <tr>
-            <td>Movie</td>
+            <th>Movie</th>
             @foreach ($dates as $date)
-                <td>{{ $date->format('D d/m') }}</td>
+                <th>{{ $date->format('D d/m') }}</th>
             @endforeach
         </tr>
         </thead>
@@ -14,12 +14,12 @@
         <?php /** @var \App\Models\Movie $movie */ ?>
         @foreach ($movies as $movie)
             <tr>
-                <td>
+                <td class="table__movie-title">
                     {{ $movie->title }}
                 </td>
                 @foreach ($dates as $date)
                     <td>
-                        <ul>
+                        <ul class="time-list">
                             @foreach ($movie->getShowingsForDate($date) as $showing)
                                 <li>{{ $showing->starts_at->format('H:i') }}</li>
                             @endforeach

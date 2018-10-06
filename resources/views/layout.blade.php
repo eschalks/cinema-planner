@@ -11,6 +11,8 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-@yield('body')
+<div class="container">
+    @yield('content')
+</div>
 </body>
 </html>
