@@ -2,18 +2,30 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
-class Authenticate extends Middleware
+use App\User;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\Request;
+
+class Authenticate
 {
     /**
-     * Get the path the user should be redirected to when they are not authenticated.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string
+     * @var Guard
      */
-    protected function redirectTo($request)
+    private $guard;
+
+    public function __construct(Guard $guard)
     {
-        return route('login');
+        $this->guard = $guard;
+    }
+
+    public function handle(Request $request, $next)
+    {
+        $userCookie = $request->cookie('user');
+        if ($userCookie !== null) {
+            $this->guard->setUser(User::find($userCookie));
+        }
+
+        return $next($request);
     }
 }

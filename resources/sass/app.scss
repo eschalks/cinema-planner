@@ -1,5 +1,13 @@
 @import "~normalize.css/normalize.css";
 
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Roboto', monospace;
     color: #333;
@@ -38,4 +46,30 @@ table {
 
 .table__movie-title {
     width: 20%;
+}
+
+.dialog-wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background: rgba(0, 0, 0, 0.7);
+    overflow: auto;
+
+    z-index: 50;
+}
+
+.dialog {
+    background: white;
+    padding: 1rem;
+    max-width: 40rem;
+    margin: 5rem auto 0;
+
+    input {
+        padding: 0.5rem;
+        display: block;
+        width: 100%;
+    }
 }

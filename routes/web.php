@@ -11,4 +11,5 @@
 |
 */
 
-Route::get('/', 'ShowMovies');
+Route::get('/', 'ShowMovies')->name('index');
+Route::post('/login', 'Login')->name('login');

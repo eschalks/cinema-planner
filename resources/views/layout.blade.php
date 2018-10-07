@@ -14,5 +14,9 @@
 <div class="container">
     @yield('content')
 </div>
+
+@guest
+    @include('register_dialog')
+@endguest
 </body>
 </html>
