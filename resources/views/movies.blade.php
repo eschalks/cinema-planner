@@ -21,7 +21,16 @@
                     <td>
                         <ul class="time-list">
                             @foreach ($movie->getShowingsForDate($date) as $showing)
-                                <li>{{ $showing->starts_at->format('H:i') }}</li>
+                                <li>
+                                    <span class="time-list__item__time">
+                                    {{ $showing->starts_at->format('H:i') }}
+                                    </span>
+
+                                    <span class="time-list__item__info">
+                                        {{ __('movies.quality.'.$showing->quality ) }}
+                                    @if ($showing->is_3d) 3D @endif
+                                    </span>
+                                </li>
                             @endforeach
                         </ul>
                     </td>

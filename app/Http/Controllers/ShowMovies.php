@@ -16,18 +16,12 @@ class ShowMovies extends Controller
 {
     public function __invoke()
     {
-        $startDate = Chronos::parse(MovieShowing::min('starts_at'));
+        $startDate = Chronos::today();
 
-        $showingQueryFunction = function ($query) use ($startDate) {
+        $movies = Movie::withShowings(function ($query) use ($startDate) {
             /** @var HasMany|Builder $query */
             $query->where('starts_at', '>=', $startDate);
-        };
-
-        $movies = Movie::whereHas('showings', $showingQueryFunction)
-                       ->with([
-                           'showings' => $showingQueryFunction,
-                       ])
-                       ->get()
+        })->get()
                        ->sortByDesc(function (Movie $movie) {
                            return $movie->showings->count();
                        });
