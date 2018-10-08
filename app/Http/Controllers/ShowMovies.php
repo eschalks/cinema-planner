@@ -23,7 +23,7 @@ class ShowMovies extends Controller
             $query->where('starts_at', '>=', $startDate);
         })->get()
                        ->sortByDesc(function (Movie $movie) {
-                           return $movie->showings->count();
+                           return $movie->getPopularity();
                        });
 
         $endDate = $movies->max(function (Movie $movie) {

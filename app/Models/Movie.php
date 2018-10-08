@@ -23,6 +23,8 @@ use Illuminate\Database\Query\Builder;
  */
 class Movie extends BaseModel
 {
+    private $popularity;
+
     public function showings()
     {
         return $this->hasMany(MovieShowing::class);
@@ -52,5 +54,45 @@ class Movie extends BaseModel
     {
         return $query->whereHas('showings', $showingQuery)
                      ->with(['showings' => $showingQuery]);
+    }
+
+    /**
+     * Used to determine how high up a movie should appear on the index page.
+     * Based on the amount of showings and number of users that are interested.
+     */
+    public function getPopularity()
+    {
+        if ($this->popularity === null) {
+            $this->popularity = $this->getPopularityShowingCount() + $this->getPopularityUserCount() * 1000;
+        }
+        return $this->popularity;
+    }
+
+    private function getPopularityShowingCount()
+    {
+        if ($this->relationLoaded('showings')) {
+            return $this->showings->count();
+        }
+
+        return $this->showings()->count();
+    }
+
+    private function getPopularityUserCount()
+    {
+        return $this->createUserCountQuery()->count('user_id');
+    }
+
+    private function createUserCountQuery()
+    {
+        $query = \DB::table('movie_showing_user')
+                    ->distinct();
+
+        if ($this->relationLoaded('showings')) {
+            $showingIds = $this->showings->pluck('id');
+            return $query->whereIn('movie_showing_id', $showingIds);
+        }
+
+        return $query->join('movie_showings', 'movie_showing_id', '=', 'movie_showings.id')
+                     ->where('movie_id', $this->id);
     }
 }
