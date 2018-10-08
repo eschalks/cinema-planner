@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
 
+use App\User;
+
 /**
  * App\Models\MovieShowing
  *
@@ -19,6 +21,7 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MovieShowing whereSource($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\MovieShowing whereStartsAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
  */
 class MovieShowing extends BaseModel
 {
@@ -27,4 +30,9 @@ class MovieShowing extends BaseModel
         'starts_at',
         'ends_at',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

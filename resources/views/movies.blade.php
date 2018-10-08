@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <table>
+    <table id="movie-showing-table">
         <thead>
         <tr>
             <th>Movie</th>
@@ -21,7 +21,7 @@
                     <td>
                         <ul class="time-list">
                             @foreach ($movie->getShowingsForDate($date) as $showing)
-                                <li>
+                                <li data-showing="{{ $showing->id }}">
                                     <span class="time-list__item__time">
                                     {{ $showing->starts_at->format('H:i') }}
                                     </span>
@@ -39,4 +39,19 @@
         @endforeach
         </tbody>
     </table>
+
+    @component('components.dialog', ['id' => 'movie'])
+        <form method="post" action="{{ route('joinShowing') }}">
+            {{ csrf_field() }}
+
+            <input type="hidden" data-var="showingId" name="showing">
+
+            Do you want to go to <span data-var="movieTitle"></span>
+            at <span data-var="time"></span> on <span data-var="date"></span>?
+
+            <div class="dialog__buttons">
+                <button type="submit">Yes</button>
+            </div>
+        </form>
+    @endcomponent
 @endsection

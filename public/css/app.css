@@ -390,6 +390,7 @@ table th {
   border: thin solid #999;
   margin: 0.25rem;
   background: #eee;
+  cursor: pointer;
 }
 
 .table__movie-title {
@@ -397,6 +398,7 @@ table th {
 }
 
 .dialog-wrapper {
+  display: none;
   position: fixed;
   top: 0;
   right: 0;
@@ -405,6 +407,10 @@ table th {
   background: rgba(0, 0, 0, 0.7);
   overflow: auto;
   z-index: 50;
+}
+
+.dialog-wrapper.is-open {
+  display: block;
 }
 
 .dialog {
@@ -418,5 +424,9 @@ table th {
   padding: 0.5rem;
   display: block;
   width: 100%;
+}
+
+.dialog span {
+  font-weight: bold;
 }
 

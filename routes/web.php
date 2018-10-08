@@ -13,3 +13,4 @@
 
 Route::get('/', 'ShowMovies')->name('index');
 Route::post('/login', 'Login')->name('login');
+Route::post('/join', 'AddCurrentUserToShowing')->name('joinShowing');

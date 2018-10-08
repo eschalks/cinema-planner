@@ -18,5 +18,7 @@
 @guest
     @include('register_dialog')
 @endguest
+
+<script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>
